@@ -1,7 +1,16 @@
-package jp.te4a.spring.boot.myapp8.mybootapp8;
+package jp.te4a.spring.boot.myapp9.mybootapp9;
 
-import java.util.ArrayList;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import java.util.List;
+
+public interface BookRepository extends JpaRepository<BookBean, Integer>{
+
+    @Query("SELECT X FROM BookBean X ORDER BY X.title")
+    List<BookBean> findAllOrderByTitle();
+}
+
+/* import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import org.springframework.beans.BeanUtils;
@@ -38,4 +47,4 @@ public class BookRepository {
     public BookBean findOne(Integer id){
         return bookMap.get(id);
     }
-}
+} */
