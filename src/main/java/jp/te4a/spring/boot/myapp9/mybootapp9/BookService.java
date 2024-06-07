@@ -29,7 +29,7 @@ public class BookService {
         return bookForm;
     }
 
-    public void delete(Integer id){bookRepository.delete(null);}
+    public void delete(Integer id){bookRepository.deleteById(id);}
 
     public List<BookForm> findAll() {
         List<BookBean> beanList = bookRepository.findAll();
@@ -43,9 +43,17 @@ public class BookService {
     }
 
     public BookForm findOne(Integer id){
-        Optional<BookBean> bookBean = bookRepository.findById(id);
+        Optional<BookBean> opt = bookRepository.findById(id);
         BookForm bookForm = new BookForm();
-        BeanUtils.copyProperties(bookBean, bookForm);
+
+        opt.ifPresent(book ->{
+            
+            bookForm.setId(book.getId());
+            bookForm.setTitle(book.getTitle());
+            bookForm.setWritter(book.getWritter());
+            bookForm.setPublisher(book.getPublisher());
+            bookForm.setPrice(book.getPrice());
+        });
         return bookForm;
     }
 }
